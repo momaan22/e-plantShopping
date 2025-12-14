@@ -3,19 +3,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addItem } from './CartSlice';
 import './ProductList.css';
 import CartItem from './CartItem';
-import AboutUs from './AboutUs'; // 1. استيراد صفحة About Us
+import AboutUs from './AboutUs';
 
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(true);
-    const [showAboutUs, setShowAboutUs] = useState(false); // 2. State للتحكم في ظهور About Us
+    const [showAboutUs, setShowAboutUs] = useState(false);
     const [addedToCart, setAddedToCart] = useState({});
 
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.items);
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-    const plantsArray = [
+    // حافظ على مصفوفة النباتات زي ما هي هنا (اختصاراً للكود في الرسالة)
+    const plantsArray = [ 
         {
             category: "Air Purifying Plants",
             plants: [
@@ -223,6 +224,7 @@ function ProductList({ onHomeClick }) {
         }
     ];
 
+    // === التصحيح هنا: تنسيق الناف بار ===
     const styleObj = {
         backgroundColor: '#4CAF50',
         color: '#fff!important',
@@ -232,12 +234,14 @@ function ProductList({ onHomeClick }) {
         alignItems: 'center',
         fontSize: '20px',
     }
-    const styleObjUl = {
+    
+    // تصحيح المسافات: خليناها فليكس عشان العناصر تيجي جنب بعض بمسافة معقولة
+    const styleLinks = {
         display: 'flex',
-        justifyContent: 'space-between',
+        gap: '50px', // المسافة بين Plants و About Us
         alignItems: 'center',
-        width: '1100px',
     }
+    
     const styleA = {
         color: 'white',
         fontSize: '30px',
@@ -254,17 +258,16 @@ function ProductList({ onHomeClick }) {
         e.preventDefault();
         setShowCart(true); 
         setShowPlants(false);
-        setShowAboutUs(false); // 3. نضمن إن About Us يختفي
+        setShowAboutUs(false);
     };
 
     const handlePlantsClick = (e) => {
         e.preventDefault();
         setShowPlants(true); 
         setShowCart(false); 
-        setShowAboutUs(false); // 3. نضمن إن About Us يختفي
+        setShowAboutUs(false);
     };
 
-    // 4. دالة تشغيل About Us
     const handleAboutUsClick = (e) => {
         e.preventDefault();
         setShowAboutUs(true);
@@ -293,7 +296,7 @@ function ProductList({ onHomeClick }) {
                 <div className="tag">
                     <div className="luxury">
                         <img src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png" alt="" />
-                        <a href="/" onClick={(e) => handleHomeClick(e)}>
+                        <a href="/" onClick={(e) => {e.preventDefault(); onHomeClick();}}>
                             <div>
                                 <h3 style={{ color: 'white' }}>Paradise Nursery</h3>
                                 <i style={{ color: 'white' }}>Where Green Meets Serenity</i>
@@ -301,16 +304,19 @@ function ProductList({ onHomeClick }) {
                         </a>
                     </div>
                 </div>
-                <div style={styleObjUl}>
+                
+                {/* === هنا الروابط في النص بشكل منظم === */}
+                <div style={styleLinks}>
                     <div> 
                         <a href="#" onClick={(e) => handlePlantsClick(e)} style={styleA}>Plants</a>
                     </div>
-                    
-                    {/* 5. زرار About Us في الناف بار */}
                     <div> 
                         <a href="#" onClick={(e) => handleAboutUsClick(e)} style={styleA}>About Us</a>
                     </div>
-                    
+                </div>
+                
+                {/* السلة في اليمين */}
+                <div style={styleLinks}> 
                     <div> 
                         <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}>
                             <h1 className='cart'>
@@ -322,7 +328,6 @@ function ProductList({ onHomeClick }) {
                 </div>
             </div>
             
-            {/* 6. الشرط النهائي للعرض */}
             {showCart ? (
                 <CartItem onContinueShopping={handleContinueShopping} />
             ) : showAboutUs ? (
