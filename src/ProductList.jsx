@@ -3,16 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addItem } from './CartSlice';
 import './ProductList.css';
 import CartItem from './CartItem';
+import AboutUs from './AboutUs'; // 1. استيراد صفحة About Us
 
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
-    const [showPlants, setShowPlants] = useState(false);
+    const [showPlants, setShowPlants] = useState(true);
+    const [showAboutUs, setShowAboutUs] = useState(false); // 2. State للتحكم في ظهور About Us
     const [addedToCart, setAddedToCart] = useState({});
 
     const dispatch = useDispatch();
-
     const cartItems = useSelector(state => state.cart.items);
-
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     const plantsArray = [
@@ -242,6 +242,7 @@ function ProductList({ onHomeClick }) {
         color: 'white',
         fontSize: '30px',
         textDecoration: 'none',
+        cursor: 'pointer' 
     }
 
     const handleHomeClick = (e) => {
@@ -252,17 +253,30 @@ function ProductList({ onHomeClick }) {
     const handleCartClick = (e) => {
         e.preventDefault();
         setShowCart(true); 
+        setShowPlants(false);
+        setShowAboutUs(false); // 3. نضمن إن About Us يختفي
     };
 
     const handlePlantsClick = (e) => {
         e.preventDefault();
         setShowPlants(true); 
         setShowCart(false); 
+        setShowAboutUs(false); // 3. نضمن إن About Us يختفي
     };
+
+    // 4. دالة تشغيل About Us
+    const handleAboutUsClick = (e) => {
+        e.preventDefault();
+        setShowAboutUs(true);
+        setShowCart(false);
+        setShowPlants(false);
+    }
 
     const handleContinueShopping = (e) => {
         e.preventDefault();
         setShowCart(false);
+        setShowPlants(true);
+        setShowAboutUs(false);
     };
 
     const handleAddToCart = (product) => {
@@ -288,7 +302,15 @@ function ProductList({ onHomeClick }) {
                     </div>
                 </div>
                 <div style={styleObjUl}>
-                    <div> <a href="#" onClick={(e) => handlePlantsClick(e)} style={styleA}>Plants</a></div>
+                    <div> 
+                        <a href="#" onClick={(e) => handlePlantsClick(e)} style={styleA}>Plants</a>
+                    </div>
+                    
+                    {/* 5. زرار About Us في الناف بار */}
+                    <div> 
+                        <a href="#" onClick={(e) => handleAboutUsClick(e)} style={styleA}>About Us</a>
+                    </div>
+                    
                     <div> 
                         <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}>
                             <h1 className='cart'>
@@ -300,7 +322,12 @@ function ProductList({ onHomeClick }) {
                 </div>
             </div>
             
-            {!showCart ? (
+            {/* 6. الشرط النهائي للعرض */}
+            {showCart ? (
+                <CartItem onContinueShopping={handleContinueShopping} />
+            ) : showAboutUs ? (
+                <AboutUs /> 
+            ) : (
                 <div className="product-grid">
                     {plantsArray.map((category, index) => (
                         <div key={index}>
@@ -325,8 +352,6 @@ function ProductList({ onHomeClick }) {
                         </div>
                     ))}
                 </div>
-            ) : (
-                <CartItem onContinueShopping={handleContinueShopping} />
             )}
         </div>
     );
