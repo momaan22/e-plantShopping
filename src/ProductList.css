@@ -1,252 +1,263 @@
-/* Reset some default styles */
-body, h1, ul {
+/* =========================================
+   1. General Reset & Background
+   ========================================= */
+   * {
+    box-sizing: border-box; /* مهم جداً عشان المقاسات متضربش */
+}
+
+body {
     margin: 0;
     padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4fcf7; /* خلفية خضراء فاتحة جداً ومريحة للعين */
+    color: #333;
 }
 
-/* Set a background color */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+a {
+    text-decoration: none;
 }
 
-/* Navbar */
+/* =========================================
+   2. Navbar Styles (إصلاح الهيدر)
+   ========================================= */
 .navbar {
     background-color: #4CAF50;
-    color: #fff!important;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 20px;
-}
-
-.navbar .ul {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 1100px;
-}
-
-.navbar li {
-    margin-right: 30px;
-}
-
-.navbar .ul div a {
     color: white;
-    font-size: 30px;
-    text-decoration: none;
-   
+    padding: 10px 40px; /* مساحة داخلية مريحة */
+    display: flex;
+    justify-content: space-between; /* يفصل العناصر (يمين - وسط - يسار) */
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Product Grid */
-.product-grid {
-    display:flex;
+/* الجزء الخاص باللوجو والاسم */
+.navbar .tag {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar .tag img {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.navbar .luxury {
+    display: flex;
     flex-direction: column;
-    width: 100vw;
+}
+
+.navbar .luxury h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar .luxury i {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* الجزء الخاص بالروابط (Plants) */
+.navbar_links {
+    display: flex;
+    gap: 40px;
+}
+
+.navbar_links a {
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar_links a:hover {
+    color: #dcedc8;
+}
+
+/* =========================================
+   3. Cart Icon & Badge (إصلاح أيقونة السلة)
+   ========================================= */
+.cart {
+    position: relative;
+    display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
+
+.cart svg {
+    width: 40px;
+    height: 40px;
+    fill: white;
+}
+
+/* الدائرة الحمراء للعداد */
+.cart_quantity_count {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #4CAF50; /* حدود خضراء تفصلها عن الخلفية */
+}
+
+/* =========================================
+   4. Product Grid Layout (تنسيق الشبكة)
+   ========================================= */
+.product-grid {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto; /* توسيط المحتوى في الصفحة */
+}
+
+/* عناوين الأقسام (Air Purifying Plants...) */
+.product-grid h1 {
+    text-align: center;
+    margin: 40px 0 20px;
+    color: #2e7d32;
+    font-size: 28px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
 .product-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 50px;
-    /* background-color: pink; */
-    /* justify-content: space-between; */
-    padding: 20px;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
+    justify-content: center; /* توسيط الكروت */
+    gap: 30px; /* مسافات متساوية بين الكروت */
 }
 
-/* Product Card */
+/* =========================================
+   5. Product Card (إصلاح شكل الكارت والصور)
+   ========================================= */
 .product-card {
-    flex: 0 0 calc(33.33% - 20px); /* Adjust width for 3 cards per row with 20px gap */
-    max-width: calc(26.33% - 20px); /* Adjust max-width for 3 cards per row with 20px gap */
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
+    background: white;
+    border-radius: 15px;
+    width: 300px; /* عرض ثابت للكارت */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column; /* ترتيب العناصر فوق بعض */
     position: relative;
-    
-    gap: 20px;
 }
 
-/* Pseudo-classes - Hover effect on product button */
 .product-card:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease-in-out;
-    z-index: 1;
+    transform: translateY(-5px); /* حركة خفيفة للأعلى عند الوقوف عليه */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-.product-title {
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.product-price {
-    color: #e74c3c;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-}
-
-.product-image {
-    max-width: 100%;
-    height: 200px; /* Adjust height for better consistency */
-}
-
-.product-button {
-    background-color: #e74c3c;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-    margin-top: 10px;
-}
-
-.product-button:hover {
-    background-color: #c0392b;
-}
-
-/* Pseudo-elements - Sale badge */
+/* شارة Sale */
 .product-card::before {
     content: "SALE";
     background-color: #e74c3c;
-    color: #fff;
+    color: white;
     position: absolute;
-    top: 0;
+    top: 15px;
     right: 0;
-    padding: 5px 10px;
-    border-radius: 0 0 0 5px;
+    padding: 5px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    z-index: 10;
 }
-.tag_home_link{
-    display: flex;
-    /* background-color: red; */
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-left: 50px;
-    color: white;
-    text-decoration: none;
+
+/* الصورة - أهم جزء للإصلاح */
+.product-image {
+    width: 100%;
+    height: 250px; /* ارتفاع ثابت لكل الصور */
+    object-fit: cover; /* بيقص الصورة عشان تملا المساحة من غير ما تمط */
+    background-color: #f9f9f9;
+}
+
+.product-title {
     font-size: 20px;
-}
-.tag_home_link h3{
-    font-size: 30px;
-}
-.tag a{
-    text-decoration: none;
-}
-.tag {
-    width: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.tag img {
-    height: 70px;
-    width: 70px;
-    border-radius: 70%;
-    
-}
-
-.luxury {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 650px;
-    font-size: 19px;
-}
-.cart{
-    color: white;
-    display: flex;
-}
-.cart_quantity_count{
-    margin-top: 16px;
-    /* background-color: red; */
-    margin-left: 27px;
-    position: absolute;
-    font-size: 29px;
-
-}
-.plantname_heading{
-   display: flex;
-   align-items: center;
-   justify-content: center;
-    /* background-color: yellow; */
-}
-.plant_heading{
-    width: 400px;
+    font-weight: bold;
+    margin: 15px 0 5px;
+    color: #333;
     text-align: center;
-    margin: 20px;
-    border: 1px solid rgb(5, 4, 4);
-    border-left: none;
-    border-right: none;
-
-    
 }
-/* Add Media Query for responsiveness */
-@media (max-width: 768px) {
-    .product-card {
-        flex: 1 1 calc(50% - 20px); /* Adjust width for 2 cards per row with 20px gap on smaller screens */
-        max-width: calc(50% - 20px); /* Adjust max-width for 2 cards per row with 20px gap on smaller screens */
-    }
-}
-/* ProductList.css */
 
+.product-description {
+    font-size: 14px;
+    color: #666;
+    padding: 0 15px;
+    text-align: center;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    height: 40px; /* ارتفاع ثابت للوصف عشان الزراير تبقى قصاد بعض */
+    overflow: hidden;
+}
+
+.product-cost {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2e7d32;
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* =========================================
+   6. Buttons (Add to Cart)
+   ========================================= */
 .product-button {
-    background-color: #4CAF50; /* Green */
-    border: none;
+    background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
+    border: none;
+    padding: 12px;
+    width: 100%; /* الزرار بعرض الكارت */
     font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
     cursor: pointer;
-  }
-  
-  .product-button:hover {
+    transition: background-color 0.3s;
+    margin-top: auto; /* بيزق الزرار لآخر الكارت تحت */
+}
+
+.product-button:hover {
     background-color: #45a049;
-  }
-  
-  .product-button.added-to-cart {
-    background-color: grey; /* Grey when product is added */
-  }
-  @media (max-width: 1200px) {
-    .product-card {
-      flex: 1 1 calc(33.33% - 20px); /* Adjust width for 3 cards per row with 20px gap on medium screens */
-      max-width: calc(33.33% - 20px); /* Adjust max-width for 3 cards per row with 20px gap on medium screens */
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .product-card {
-      flex: 1 1 calc(50% - 20px); /* Adjust width for 2 cards per row with 20px gap on small screens */
-      max-width: calc(50% - 20px); /* Adjust max-width for 2 cards per row with 20px gap on small screens */
-    }
+}
+
+/* شكل الزرار لما المنتج ينضاف */
+.product-button.added-to-cart {
+    background-color: #7f8c8d; /* رمادي شيك */
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.product-button.added-to-cart:hover {
+    background-color: #7f8c8d; /* ميتغيرش لونه */
+}
+
+/* =========================================
+   7. Responsive Design (للموبايل)
+   ========================================= */
+@media (max-width: 768px) {
     .navbar {
-        flex-direction: column; /* Change flex direction to stack items vertically */
-        align-items: center; /* Align items to the center of the container */
-      }
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+    }
     
-      .tag {
-        margin-bottom: 20px; /* Add margin bottom for spacing */
-        text-align: center; /* Align text to the center */
-      }
-    
-      .ul {
-        display: flex; /* Set display to flex */
-        flex-direction: column; /* Change flex direction to stack items vertically */
-        gap: 10px; /* Add gap between items */
-      }
-    
-      .ul div {
-        text-align: center; /* Align text to the center */
-      }
-  }
+    .navbar_links {
+        gap: 20px;
+    }
+
+    .product-grid h1 {
+        font-size: 24px;
+    }
+}
